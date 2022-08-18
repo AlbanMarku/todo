@@ -1,0 +1,23 @@
+{
+  "name": "todo",
+  "version": "1.0.0",
+  "description": "",
+  "scripts": {
+    "build": "webpack"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AlbanMarku/todo.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/AlbanMarku/todo/issues"
+  },
+  "homepage": "https://github.com/AlbanMarku/todo#readme",
+  "devDependencies": {
+    "html-webpack-plugin": "^5.5.0",
+    "webpack-cli": "^4.10.0"
+  }
+}
