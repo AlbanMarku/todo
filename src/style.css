@@ -59,6 +59,14 @@ main {
     border: solid red;
 }
 
+.titleArea {
+    border: solid blue;
+}
+
+.listArea {
+    border: solid orange;
+}
+
 footer {
     grid-area: foot;
     border: solid green;

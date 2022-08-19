@@ -1,4 +1,4 @@
 import style from "./style.css"
-import mainContent from "./modules/mainContent.js"
+import MainContent from "./modules/MainContent.js"
 
-document.addEventListener('DOMContentLoaded', mainContent.loadHomepage)
+document.addEventListener('DOMContentLoaded', MainContent.loadHomepage);
