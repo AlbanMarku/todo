@@ -22,7 +22,7 @@ export default class MainContent {
     static handleButtonClick() {
         list.push(MainContent.createTask(MainContent.getInput()));//create task and push to list and get input
         console.log(list);
-        MainContent.refreshPage();
+        MainContent.refreshPage();//refresh and update
     }
 
     static createTask(input) {
@@ -45,15 +45,28 @@ export default class MainContent {
         const listArea = document.querySelector(".listArea");
         const p = document.createElement("p");
         const div = document.createElement("div");
+        const closeButton = document.createElement("button");
 
         listArea.appendChild(div);
         p.textContent = task.name;
 
+        closeButton.addEventListener("click", () => {
+            MainContent.deleteItemm(task);
+        });
+        closeButton.textContent = "Delete";
+
         div.appendChild(p);
+        div.appendChild(closeButton);
     }
 
     static clearListArea() {
         const listArea = document.querySelector(".listArea");
         listArea.innerHTML = "";
+    }
+
+    static deleteItemm(task) {
+        let index = list.indexOf(task);
+        list.splice(index, 1);
+        this.refreshPage();
     }
 }
