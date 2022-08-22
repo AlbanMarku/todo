@@ -10,24 +10,32 @@ export default class MainContent {
 
         header.textContent = "pro";
         addButton.textContent = "Add proj";
+        addButton.classList.add("addButton");
         
         addButton.addEventListener("click", () => {
-            list.push(MainContent.createTask());
-            console.log(list);
-            MainContent.refreshPage();
+            MainContent.handleButtonClick();
         });
         titleArea.appendChild(header);
         titleArea.appendChild(addButton);
     }
 
-    static createTask() {
-        console.log("created");
-        return new Task("biblio")
+    static handleButtonClick() {
+        list.push(MainContent.createTask(MainContent.getInput()));//create task and push to list and get input
+        console.log(list);
+        MainContent.refreshPage();
+    }
+
+    static createTask(input) {
+        return new Task(input)
+    }
+
+    static getInput() {
+        let taskName = prompt("enter task");
+        return taskName
     }
 
     static refreshPage() {
-        const listArea = document.querySelector(".listArea");
-        listArea.innerHTML = "";
+        MainContent.clearListArea();
         for (const selectedTask of list) {
             MainContent.displayToPage(selectedTask)
         }
@@ -42,5 +50,10 @@ export default class MainContent {
         p.textContent = task.name;
 
         div.appendChild(p);
+    }
+
+    static clearListArea() {
+        const listArea = document.querySelector(".listArea");
+        listArea.innerHTML = "";
     }
 }
