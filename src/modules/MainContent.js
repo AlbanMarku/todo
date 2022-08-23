@@ -42,14 +42,13 @@ export default class MainContent {
 
     static displayToPage(task) {
         const listArea = document.querySelector(".listArea");
-        const p = document.createElement("p");
+        const taskText = document.createElement("p");
         const div = document.createElement("div");
         const closeButton = document.createElement("button");
         const inputDate = document.createElement("input");
-        const addDateButton = document.createElement("button");
 
         listArea.appendChild(div);
-        p.textContent = task.name;
+        taskText.textContent = task.getName();
 
         closeButton.addEventListener("click", () => {
             MainContent.deleteItemm(task);
@@ -60,18 +59,12 @@ export default class MainContent {
         inputDate.value = task.getDate();//def displayed value.
         inputDate.addEventListener("change", () => {
             task.setDate(inputDate.value);
-            console.log("changed");
-            div.replaceChild(addDateButton, inputDate);
+            console.log(list);
         });
 
-        addDateButton.textContent = "date";
-        addDateButton.addEventListener("click", () => {
-            div.replaceChild(inputDate, addDateButton);
-        });
-
-        div.appendChild(p);
+        div.appendChild(taskText);
         div.appendChild(closeButton);
-        div.appendChild(addDateButton);
+        div.appendChild(inputDate);
     }
 
     static clearListArea() {
