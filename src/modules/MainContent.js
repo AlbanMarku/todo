@@ -26,7 +26,7 @@ export default class MainContent {
     }
 
     static createTask(input) {
-        return new Task(input)
+        return new Task(input, MainContent.fetchCurrentDate())
     }
 
     static getInput() {
@@ -46,6 +46,7 @@ export default class MainContent {
         const p = document.createElement("p");
         const div = document.createElement("div");
         const closeButton = document.createElement("button");
+        const inputDate = document.createElement("input");
 
         listArea.appendChild(div);
         p.textContent = task.name;
@@ -55,8 +56,13 @@ export default class MainContent {
         });
         closeButton.textContent = "Delete";
 
+        inputDate.type = "date";
+
+        inputDate.value = MainContent.fetchCurrentDate();
+
         div.appendChild(p);
         div.appendChild(closeButton);
+        div.appendChild(inputDate);
     }
 
     static clearListArea() {
@@ -67,6 +73,14 @@ export default class MainContent {
     static deleteItemm(task) {
         let index = list.indexOf(task);
         list.splice(index, 1);
-        this.refreshPage();
+        MainContent.refreshPage();
+    }
+
+    static fetchCurrentDate() {
+        const d = new Date();
+        let dd = String(d.getDate()).padStart(2, '0');
+        let mm = String(d.getMonth() + 1).padStart(2, '0');
+        let yyyy = d.getFullYear();
+        return yyyy + "-" + mm + '-' + dd
     }
 }
