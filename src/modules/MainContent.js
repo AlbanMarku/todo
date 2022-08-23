@@ -1,5 +1,6 @@
 import Task from "./Task.js"
-import {format} from "date-fns"
+import {format, addDays, parseISO, parse} from "date-fns"
+import isTomorrow from 'date-fns/isTomorrow'
 
 let list = [];
 export default class MainContent {
@@ -37,7 +38,9 @@ export default class MainContent {
     static refreshPage() {
         MainContent.clearListArea();
         for (const selectedTask of list) {
-            MainContent.displayToPage(selectedTask)
+            MainContent.displayToPage(selectedTask);
+            // let tasker = parseISO(selectedTask.getDate());
+            // console.log(isTomorrow(tasker));
         }
     }
 
@@ -63,18 +66,23 @@ export default class MainContent {
         });
         closeButton.textContent = "Delete";
 
-        task.setDate(MainContent.fetchCurrentDate());
         console.log(task);
         inputDate.type = "date";
         inputDate.value = task.getDate();//def displayed value.
         inputDate.addEventListener("change", () => {
             task.setDate(inputDate.value);
-            console.log(list);
+            let tasker = parseISO(task.getDate());//do this check in another place on button filter click.
+            if(isTomorrow(tasker)) {
+                taskItem.style.backgroundColor = "red";
+            }
         });
 
         nameArea.appendChild(taskText);
         editArea.appendChild(closeButton);
         editArea.appendChild(inputDate);
+
+        
+
         //TODO: Filter by date.
     }
 
@@ -92,7 +100,12 @@ export default class MainContent {
     static fetchCurrentDate() {
         const d = new Date();
         const dateFormat = format(d, "yyyy-MM-d");
-        console.log(dateFormat);
         return dateFormat
+    }
+
+    static fetchTomorrow(tt) {
+        const tom = addDays(tt, 1);
+        const f = format(tom, "yyyy-MM-d");
+        return f
     }
 }
