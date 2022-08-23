@@ -59,6 +59,19 @@ main {
     border: solid red;
 }
 
+.taskItem {
+    display: flex;
+    justify-content: space-between;
+    background-color: rgb(97, 97, 97);
+    margin: 20px;
+    padding: 20px;
+}
+
+.editArea {
+    display: flex;
+    gap: 20px;
+}
+
 .titleArea {
     border: solid blue;
 }

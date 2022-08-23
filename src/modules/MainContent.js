@@ -43,11 +43,18 @@ export default class MainContent {
     static displayToPage(task) {
         const listArea = document.querySelector(".listArea");
         const taskText = document.createElement("p");
-        const div = document.createElement("div");
+        const taskItem = document.createElement("div");
+        const nameArea = document.createElement("div");
+        const editArea = document.createElement("div");
         const closeButton = document.createElement("button");
         const inputDate = document.createElement("input");
 
-        listArea.appendChild(div);
+        taskItem.classList.add("taskItem");
+        nameArea.classList.add("nameArea");
+        editArea.classList.add("editArea");
+        listArea.appendChild(taskItem);
+        taskItem.appendChild(nameArea);
+        taskItem.appendChild(editArea);
         taskText.textContent = task.getName();
 
         closeButton.addEventListener("click", () => {
@@ -62,9 +69,9 @@ export default class MainContent {
             console.log(list);
         });
 
-        div.appendChild(taskText);
-        div.appendChild(closeButton);
-        div.appendChild(inputDate);
+        nameArea.appendChild(taskText);
+        editArea.appendChild(closeButton);
+        editArea.appendChild(inputDate);
     }
 
     static clearListArea() {
