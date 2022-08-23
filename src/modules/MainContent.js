@@ -1,4 +1,5 @@
 import Task from "./Task.js"
+import {format} from "date-fns"
 
 let list = [];
 export default class MainContent {
@@ -62,6 +63,8 @@ export default class MainContent {
         });
         closeButton.textContent = "Delete";
 
+        task.setDate(MainContent.fetchCurrentDate());
+        console.log(task);
         inputDate.type = "date";
         inputDate.value = task.getDate();//def displayed value.
         inputDate.addEventListener("change", () => {
@@ -72,6 +75,7 @@ export default class MainContent {
         nameArea.appendChild(taskText);
         editArea.appendChild(closeButton);
         editArea.appendChild(inputDate);
+        //TODO: Filter by date.
     }
 
     static clearListArea() {
@@ -87,9 +91,8 @@ export default class MainContent {
 
     static fetchCurrentDate() {
         const d = new Date();
-        let dd = String(d.getDate()).padStart(2, '0');
-        let mm = String(d.getMonth() + 1).padStart(2, '0');
-        let yyyy = d.getFullYear();
-        return yyyy + "-" + mm + '-' + dd
+        const dateFormat = format(d, "yyyy-MM-d");
+        console.log(dateFormat);
+        return dateFormat
     }
 }
