@@ -46,6 +46,7 @@ export default class MainContent {
         const div = document.createElement("div");
         const closeButton = document.createElement("button");
         const inputDate = document.createElement("input");
+        const addDateButton = document.createElement("button");
 
         listArea.appendChild(div);
         p.textContent = task.name;
@@ -59,11 +60,18 @@ export default class MainContent {
         inputDate.value = task.getDate();//def displayed value.
         inputDate.addEventListener("change", () => {
             task.setDate(inputDate.value);
+            console.log("changed");
+            div.replaceChild(addDateButton, inputDate);
+        });
+
+        addDateButton.textContent = "date";
+        addDateButton.addEventListener("click", () => {
+            div.replaceChild(inputDate, addDateButton);
         });
 
         div.appendChild(p);
         div.appendChild(closeButton);
-        div.appendChild(inputDate);
+        div.appendChild(addDateButton);
     }
 
     static clearListArea() {
