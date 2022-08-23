@@ -21,7 +21,6 @@ export default class MainContent {
 
     static handleButtonClick() {
         list.push(MainContent.createTask(MainContent.getInput()));//create task and push to list and get input
-        console.log(list);
         MainContent.refreshPage();//refresh and update
     }
 
@@ -57,8 +56,10 @@ export default class MainContent {
         closeButton.textContent = "Delete";
 
         inputDate.type = "date";
-
-        inputDate.value = MainContent.fetchCurrentDate();
+        inputDate.value = task.getDate();//def displayed value.
+        inputDate.addEventListener("change", () => {
+            task.setDate(inputDate.value);
+        });
 
         div.appendChild(p);
         div.appendChild(closeButton);
