@@ -41,6 +41,7 @@ nav {
     gap: 20px;
     padding: 20px;
     flex: 1;
+    overflow: auto;
 }
 
 .projectArea {

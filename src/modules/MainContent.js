@@ -9,6 +9,7 @@ export default class MainContent {
         const header = document.createElement("h1");
         const addButton = document.createElement("button");
         const titleArea = document.querySelector(".titleArea");
+        const todayButton = document.querySelector("#todayButton");
 
         header.textContent = "pro";
         addButton.textContent = "Add proj";
@@ -19,6 +20,8 @@ export default class MainContent {
         });
         titleArea.appendChild(header);
         titleArea.appendChild(addButton);
+
+        todayButton.addEventListener("click",(MainContent.displayToday));
     }
 
     static handleButtonClick() {
@@ -39,9 +42,8 @@ export default class MainContent {
         MainContent.clearListArea();
         for (const selectedTask of list) {
             MainContent.displayToPage(selectedTask);
-            // let tasker = parseISO(selectedTask.getDate());
-            // console.log(isTomorrow(tasker));
         }
+
     }
 
     static displayToPage(task) {
@@ -62,28 +64,30 @@ export default class MainContent {
         taskText.textContent = task.getName();
 
         closeButton.addEventListener("click", () => {
-            MainContent.deleteItemm(task);
+            MainContent.deleteItem(task);
         });
         closeButton.textContent = "Delete";
 
-        console.log(task);
+        
         inputDate.type = "date";
-        inputDate.value = task.getDate();//def displayed value.
+        inputDate.value = task.getDate();
         inputDate.addEventListener("change", () => {
             task.setDate(inputDate.value);
-            let tasker = parseISO(task.getDate());//do this check in another place on button filter click.
-            if(isTomorrow(tasker)) {
-                taskItem.style.backgroundColor = "red";
-            }
         });
 
         nameArea.appendChild(taskText);
         editArea.appendChild(closeButton);
         editArea.appendChild(inputDate);
+        //TODO: by tomorrow. filter dates
+        //by next projy
+        //in a day style
+        console.log(list);
+        console.log(task.getDate());
+    }
 
-        
-
-        //TODO: Filter by date.
+    static displayToday() {
+        for (const selectedTask of list) {
+        }
     }
 
     static clearListArea() {
@@ -91,7 +95,7 @@ export default class MainContent {
         listArea.innerHTML = "";
     }
 
-    static deleteItemm(task) {
+    static deleteItem(task) {
         let index = list.indexOf(task);
         list.splice(index, 1);
         MainContent.refreshPage();
@@ -101,11 +105,5 @@ export default class MainContent {
         const d = new Date();
         const dateFormat = format(d, "yyyy-MM-d");
         return dateFormat
-    }
-
-    static fetchTomorrow(tt) {
-        const tom = addDays(tt, 1);
-        const f = format(tom, "yyyy-MM-d");
-        return f
     }
 }
