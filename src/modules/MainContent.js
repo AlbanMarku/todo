@@ -1,5 +1,5 @@
 import Task from "./Task.js"
-import {format, addDays, parseISO, parse} from "date-fns"
+import {format, addDays, parseISO, parse, getDayOfYear} from "date-fns"
 import isTomorrow from 'date-fns/isTomorrow'
 
 let list = [];
@@ -86,7 +86,13 @@ export default class MainContent {
     }
 
     static displayToday() {
+        MainContent.clearListArea();
         for (const selectedTask of list) {
+            let d = parseISO(selectedTask.getDate());
+            let now = parseISO(MainContent.fetchCurrentDate());
+            if(getDayOfYear(d) === getDayOfYear(now)) {
+                MainContent.displayToPage(selectedTask);
+            }
         }
     }
 
