@@ -1,5 +1,5 @@
 import Task from "./Task.js"
-import {format, addDays, parseISO, parse, getDayOfYear} from "date-fns"
+import {format, parseISO, getDayOfYear, getWeekOfMonth} from "date-fns"
 import isTomorrow from 'date-fns/isTomorrow'
 
 let list = [];
@@ -11,6 +11,7 @@ export default class MainContent {
         const titleArea = document.querySelector(".titleArea");
         const todayButton = document.querySelector("#todayButton");
         const inboxButton = document.querySelector("#inboxButton");
+        const weekButton = document.querySelector("#weekButton");
 
         header.textContent = "pro";
         addButton.textContent = "Add proj";
@@ -24,6 +25,7 @@ export default class MainContent {
 
         todayButton.addEventListener("click",(MainContent.displayToday));
         inboxButton.addEventListener("click", (MainContent.displayAllDay));
+        weekButton.addEventListener("click", (MainContent.displayWeek));
     }
 
     static handleButtonClick() {
@@ -45,7 +47,27 @@ export default class MainContent {
         for (const selectedTask of list) {
             MainContent.displayToPage(selectedTask);
         }
+    }
 
+    static displayWeek() {
+        MainContent.clearListArea();
+        for (const selectedTask of list) {
+            let d = parseISO(selectedTask.getDate());
+            let now = parseISO(MainContent.fetchCurrentDate());
+            if(getWeekOfMonth(d) === getWeekOfMonth(now)) {
+                MainContent.displayToPage(selectedTask);
+            }
+        }
+    }
+    static displayToday() {
+        MainContent.clearListArea();
+        for (const selectedTask of list) {
+            let d = parseISO(selectedTask.getDate());
+            let now = parseISO(MainContent.fetchCurrentDate());
+            if(getDayOfYear(d) === getDayOfYear(now)) {
+                MainContent.displayToPage(selectedTask);
+            }
+        }
     }
 
     static displayToPage(task) {
@@ -85,17 +107,6 @@ export default class MainContent {
         //in a day style
         console.log(list);
         console.log(task.getDate());
-    }
-
-    static displayToday() {
-        MainContent.clearListArea();
-        for (const selectedTask of list) {
-            let d = parseISO(selectedTask.getDate());
-            let now = parseISO(MainContent.fetchCurrentDate());
-            if(getDayOfYear(d) === getDayOfYear(now)) {
-                MainContent.displayToPage(selectedTask);
-            }
-        }
     }
 
     static clearListArea() {
