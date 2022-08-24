@@ -10,6 +10,7 @@ export default class MainContent {
         const addButton = document.createElement("button");
         const titleArea = document.querySelector(".titleArea");
         const todayButton = document.querySelector("#todayButton");
+        const inboxButton = document.querySelector("#inboxButton");
 
         header.textContent = "pro";
         addButton.textContent = "Add proj";
@@ -22,11 +23,12 @@ export default class MainContent {
         titleArea.appendChild(addButton);
 
         todayButton.addEventListener("click",(MainContent.displayToday));
+        inboxButton.addEventListener("click", (MainContent.displayAllDay));
     }
 
     static handleButtonClick() {
         list.push(MainContent.createTask(MainContent.getInput()));//create task and push to list and get input
-        MainContent.refreshPage();//refresh and update
+        MainContent.displayAllDay();//refresh and update
     }
 
     static createTask(input) {
@@ -38,7 +40,7 @@ export default class MainContent {
         return taskName
     }
 
-    static refreshPage() {
+    static displayAllDay() {
         MainContent.clearListArea();
         for (const selectedTask of list) {
             MainContent.displayToPage(selectedTask);
@@ -104,7 +106,7 @@ export default class MainContent {
     static deleteItem(task) {
         let index = list.indexOf(task);
         list.splice(index, 1);
-        MainContent.refreshPage();
+        MainContent.displayAllDay();
     }
 
     static fetchCurrentDate() {
