@@ -52,7 +52,7 @@ export default class MainContent {
         projectButton.addEventListener("click",() => {
             MainContent.clearListArea();
             MainContent.clearTitleArea();
-            MainContent.viewProject(selectedProject);
+            MainContent.projectPage(selectedProject);
         });
 
         listArea.appendChild(projectButton);
@@ -62,13 +62,14 @@ export default class MainContent {
         return new Project(input)
     }
 
-    static viewProject(selectedProject) {
+    static projectPage(selectedProject) {
         const titleArea = document.querySelector(".titleArea");
         const projectTitle = document.createElement("h2");
         const newProjectTaskButton = document.createElement("button");
 
         projectTitle.textContent = selectedProject.getName();
         newProjectTaskButton.textContent = "new task";
+        MainContent.updateTaskProjects(selectedProject);
         newProjectTaskButton.addEventListener("click",() => {
             selectedProject.addTask(MainContent.createTask(MainContent.getInput("project task")));
             MainContent.updateTaskProjects(selectedProject);
@@ -81,15 +82,8 @@ export default class MainContent {
     static updateTaskProjects(selectedProject) {
         MainContent.clearListArea();
         for (const selectedTask of selectedProject.getTasks()) {
-            MainContent.displayProjectTask(selectedTask);
+            MainContent.displayToPage(selectedTask);
         }
-    }
-
-    static displayProjectTask(selectedTask) {
-        const listArea = document.querySelector(".listArea");
-        const p = document.createElement("p");
-
-        listArea.appendChild(p);
     }
 
     static handleButtonClick() {
@@ -140,6 +134,16 @@ export default class MainContent {
             let now = parseISO(MainContent.fetchCurrentDate());
             if(getDayOfYear(d) === getDayOfYear(now)) {
                 MainContent.displayToPage(selectedTask);
+            }
+        }
+
+        for (const selectedProject of projectList) {
+            for (const task of selectedProject.getTasks()) {
+                let d = parseISO(task.getDate());
+                let now = parseISO(MainContent.fetchCurrentDate());
+                if(getDayOfYear(d) === getDayOfYear(now)) {
+                    MainContent.displayToPage(task);
+                }
             }
         }
     }
