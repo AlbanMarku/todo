@@ -55,6 +55,16 @@ nav {
     flex: 2;
 }
 
+.projectAddArea {
+    border: solid blue;
+    width: 100%;
+}
+
+.projectListArea {
+    border: solid yellow;
+    width: 100%;
+}
+
 main {
     grid-area: main;
     border: solid red;
