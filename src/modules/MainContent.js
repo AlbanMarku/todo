@@ -68,7 +68,7 @@ export default class MainContent {
         const newProjectTaskButton = document.createElement("button");
 
         projectTitle.textContent = selectedProject.getName();
-        newProjectTaskButton.textContent = "new task";
+        newProjectTaskButton.textContent = "new proj task";
         MainContent.updateTaskProjects(selectedProject);
         newProjectTaskButton.addEventListener("click",() => {
             selectedProject.addTask(MainContent.createTask(MainContent.getInput("project task")));
@@ -112,6 +112,8 @@ export default class MainContent {
 
     static displayAllDay() {
         MainContent.clearListArea();
+        MainContent.clearTitleArea();
+        MainContent.loadHomepage();
         for (const selectedTask of list) {
             MainContent.displayToPage(selectedTask);
         }
@@ -119,17 +121,29 @@ export default class MainContent {
 
     static displayWeek() {
         MainContent.clearListArea();
-        for (const selectedTask of list) {
+        MainContent.clearTitleArea();
+        MainContent.loadHomepage();        for (const selectedTask of list) {
             let d = parseISO(selectedTask.getDate());
             let now = parseISO(MainContent.fetchCurrentDate());
             if(getWeekOfMonth(d) === getWeekOfMonth(now)) {
                 MainContent.displayToPage(selectedTask);
             }
         }
+
+        for (const selectedProject of projectList) {
+            for (const task of selectedProject.getTasks()) {
+                let d = parseISO(task.getDate());
+                let now = parseISO(MainContent.fetchCurrentDate());
+                if(getWeekOfMonth(d) === getWeekOfMonth(now)) {
+                    MainContent.displayToPage(task);
+                }
+            }
+        }
     }
     static displayToday() {
         MainContent.clearListArea();
-        for (const selectedTask of list) {
+        MainContent.clearTitleArea();
+        MainContent.loadHomepage();        for (const selectedTask of list) {
             let d = parseISO(selectedTask.getDate());
             let now = parseISO(MainContent.fetchCurrentDate());
             if(getDayOfYear(d) === getDayOfYear(now)) {
