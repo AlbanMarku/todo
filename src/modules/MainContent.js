@@ -16,7 +16,7 @@ export default class MainContent {
         const projectButton = document.querySelector("#projectButton");
 
         header.textContent = "pro";
-        addButton.textContent = "Add proj";
+        addButton.textContent = "Add task";
         addButton.classList.add("addButton");
         
         addButton.addEventListener("click", () => {
@@ -49,12 +49,47 @@ export default class MainContent {
         const projectButton = document.createElement("button");
         
         projectButton.textContent = selectedProject.getName();
+        projectButton.addEventListener("click",() => {
+            MainContent.clearListArea();
+            MainContent.clearTitleArea();
+            MainContent.viewProject(selectedProject);
+        });
 
         listArea.appendChild(projectButton);
     }
 
     static createProject(input) {
         return new Project(input)
+    }
+
+    static viewProject(selectedProject) {
+        const titleArea = document.querySelector(".titleArea");
+        const projectTitle = document.createElement("h2");
+        const newProjectTaskButton = document.createElement("button");
+
+        projectTitle.textContent = selectedProject.getName();
+        newProjectTaskButton.textContent = "new task";
+        newProjectTaskButton.addEventListener("click",() => {
+            selectedProject.addTask(MainContent.createTask(MainContent.getInput("project task")));
+            MainContent.updateTaskProjects(selectedProject);
+        });
+
+        titleArea.appendChild(projectTitle);
+        titleArea.appendChild(newProjectTaskButton);
+    }
+
+    static updateTaskProjects(selectedProject) {
+        MainContent.clearListArea();
+        for (const selectedTask of selectedProject.getTasks()) {
+            MainContent.displayProjectTask(selectedTask);
+        }
+    }
+
+    static displayProjectTask(selectedTask) {
+        const listArea = document.querySelector(".listArea");
+        const p = document.createElement("p");
+
+        listArea.appendChild(p);
     }
 
     static handleButtonClick() {
@@ -65,6 +100,11 @@ export default class MainContent {
     static clearProjectButtons() {
         const listArea = document.querySelector(".projectListArea");
         listArea.innerHTML = "";
+    }
+
+    static clearTitleArea() {
+        const titleArea = document.querySelector(".titleArea");
+        titleArea.innerHTML = "";
     }
 
     static createTask(input) {
@@ -136,9 +176,6 @@ export default class MainContent {
         nameArea.appendChild(taskText);
         editArea.appendChild(closeButton);
         editArea.appendChild(inputDate);
-        //TODO:
-        //by next projy
-        //in a day style
         console.log(list);
     }
 
