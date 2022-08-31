@@ -2,11 +2,18 @@
     box-sizing: border-box;
     margin: 0px;
     padding: 0px;
+    font-family: 'Ubuntu', sans-serif;
 }
 
 html {
     height: 100%;
     background-color: darkgrey;
+}
+
+button {
+    background-color: rgb(0, 30, 49);
+    color: white;
+    font-weight: bold;
 }
 
 body {
@@ -22,26 +29,44 @@ body {
 
 header {
     grid-area: head;
-    border: solid blue;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    background-color: rgb(8, 32, 50);
+    color: white;
+}
+
+header img {
+    width: 50px;
 }
 
 nav {
     grid-area: nav;
-    border: solid black;
     display: flex;
     flex-direction: column;
+    background-color: rgb(44, 57, 75);
+    color: white;
 }
 
 .todoArea {
     display: flex;
-    border: solid orange;
     flex-direction: column;
-    justify-content: start;
+    justify-content: space-between;
     align-items: flex-start;
     gap: 20px;
     padding: 20px;
-    flex: 1;
+    flex: 0.5;
     overflow: auto;
+    background-color: rgb(44, 57, 75);
+}
+
+.todoArea button {
+    border-style: none;
+    border-radius: 10px;
+    padding: 10px;
+    cursor: pointer;
+    width: 100%;
 }
 
 .projectArea {
@@ -49,33 +74,62 @@ nav {
     flex-direction: column;
     justify-content: start;
     align-items: flex-start;
-    border: solid red;
     gap: 20px;
     padding: 20px;
     flex: 2;
 }
 
 .projectAddArea {
-    border: solid blue;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+}
+
+.projectAddArea button {
+    border-style: none;
+    border-radius: 10px;
+    padding: 10px;
+    cursor: pointer;
     width: 100%;
 }
 
 .projectListArea {
-    border: solid yellow;
     width: 100%;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(90px, 1fr));
+    justify-content: space-between;
+    gap: 10px;
+}
+
+.projectListArea button {
+    border-style: none;
+    border-radius: 10px;
+    padding: 10px;
+    cursor: pointer;
 }
 
 main {
     grid-area: main;
-    border: solid red;
+    background-color: rgb(51, 71, 86);
+    color: white;
 }
 
 .taskItem {
     display: flex;
     justify-content: space-between;
-    background-color: rgb(97, 97, 97);
+    align-items: center;
+    background-color: rgb(44, 57, 75);
     margin: 20px;
     padding: 20px;
+}
+
+.taskItem button {
+    border-style: none;
+    border-radius: 10px;
+    padding: 10px;
+    cursor: pointer;
 }
 
 .editArea {
@@ -84,14 +138,52 @@ main {
 }
 
 .titleArea {
-    border: solid blue;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    gap: 20px;
+    padding: 5px 20px;
+}
+
+.titleArea button {
+    width: 100px;
+    border-style: none;
+    border-radius: 10px;
+    padding: 10px;
+    cursor: pointer;
 }
 
 .listArea {
-    border: solid orange;
+    border: solid blue;
 }
 
 footer {
     grid-area: foot;
-    border: solid green;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    background-color: rgb(255, 76, 41);
+}
+  
+footer img {
+    width: 70px;
+}
+
+footer img:hover {
+    animation: shake 0.5s;
+}
+
+@keyframes shake {
+    0% { transform: translate(1px, 1px) rotate(0deg); }
+    10% { transform: translate(-1px, -2px) rotate(-1deg); }
+    20% { transform: translate(-3px, 0px) rotate(1deg); }
+    30% { transform: translate(3px, 2px) rotate(0deg); }
+    40% { transform: translate(1px, -1px) rotate(1deg); }
+    50% { transform: translate(-1px, 2px) rotate(-1deg); }
+    60% { transform: translate(-3px, 1px) rotate(0deg); }
+    70% { transform: translate(3px, 1px) rotate(-1deg); }
+    80% { transform: translate(-1px, -1px) rotate(1deg); }
+    90% { transform: translate(1px, 2px) rotate(0deg); }
+    100% { transform: translate(1px, -2px) rotate(-1deg); }
 }

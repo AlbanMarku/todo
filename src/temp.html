@@ -5,9 +5,15 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><%= htmlWebpackPlugin.options.title%></title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Ubuntu:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
 </head>
 <body>
-    <header>head</header>
+    <header>
+        <h1>ToDo List</h1>
+        <img src="img/notebook.svg" alt="notebook logo">
+    </header>
     <nav>
         <div class="todoArea">
             <button id="inboxButton">Inbox</button>
@@ -32,6 +38,9 @@
             
         </div>
     </main>
-    <footer>foot</footer>
+    <footer>
+        <strong>AlbanMarku</strong>
+        <a href="https://github.com/AlbanMarku"><img class="floating" src="img/logo.png" alt="git Logo"></a>
+    </footer>
 </body>
 </html>

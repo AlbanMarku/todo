@@ -35,7 +35,6 @@ export default class MainContent {
 
     static handleProjectClick() {
         projectList.push(MainContent.createProject(MainContent.getInput("project")));
-        console.log(projectList);
         MainContent.updateProjectList();
     }
 
@@ -119,9 +118,7 @@ export default class MainContent {
         for (const selectedTask of list) {
             MainContent.displayToPage(selectedTask);
         }
-
-        console.log(projectList);
-
+        
         for (const selectedProject of projectList) {
             for (const task of selectedProject.getTasks()) {
                 MainContent.displayToPage(task, selectedProject.getName());
@@ -196,8 +193,7 @@ export default class MainContent {
             MainContent.deleteItem(task);
         });
         closeButton.textContent = "Delete";
-
-        
+ 
         inputDate.type = "date";
         inputDate.value = task.getDate();
         inputDate.addEventListener("change", () => {
@@ -212,7 +208,6 @@ export default class MainContent {
         nameArea.appendChild(taskText);
         editArea.appendChild(closeButton);
         editArea.appendChild(inputDate);
-        console.log(list);
     }
 
     static clearListArea() {
@@ -231,7 +226,6 @@ export default class MainContent {
         } else {
             list.splice(index, 1);
         }
-
 
         MainContent.displayAllDay();
     }
