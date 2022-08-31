@@ -5,7 +5,7 @@ import { ta } from "date-fns/locale";
 
 let list = [];
 let projectList = [];
-//TODO: Storage. Style.
+//TODO: Storage. Delete proj. 
 export default class MainContent {
 
     static loadHomepage() {
@@ -118,7 +118,7 @@ export default class MainContent {
         for (const selectedTask of list) {
             MainContent.displayToPage(selectedTask);
         }
-        
+
         for (const selectedProject of projectList) {
             for (const task of selectedProject.getTasks()) {
                 MainContent.displayToPage(task, selectedProject.getName());
@@ -199,9 +199,11 @@ export default class MainContent {
         inputDate.addEventListener("change", () => {
             task.setDate(inputDate.value);
         });
-        if (projectName !== "" || null || undefined) {
+        if (projectName != undefined) {
+            console.log("hit");
+            console.log(projectName);
             const projectNameText = document.createElement("p");
-            projectNameText.textContent = projectName;
+            projectNameText.textContent = "Project: " + projectName;
             nameArea.appendChild(projectNameText);
         }
 
