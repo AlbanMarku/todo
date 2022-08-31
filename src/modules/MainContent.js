@@ -1,9 +1,11 @@
 import Task from "./Task.js"
 import {format, parseISO, getDayOfYear, getWeekOfMonth} from "date-fns"
 import Project from "./Project.js";
+import { ta } from "date-fns/locale";
 
 let list = [];
 let projectList = [];
+//TODO: Project of task bracket. delete item
 export default class MainContent {
 
     static loadHomepage() {
@@ -117,12 +119,21 @@ export default class MainContent {
         for (const selectedTask of list) {
             MainContent.displayToPage(selectedTask);
         }
+
+        console.log(projectList);
+
+        for (const selectedProject of projectList) {
+            for (const task of selectedProject.getTasks()) {
+                MainContent.displayToPage(task);
+            }
+        }
     }
 
     static displayWeek() {
         MainContent.clearListArea();
         MainContent.clearTitleArea();
-        MainContent.loadHomepage();        for (const selectedTask of list) {
+        MainContent.loadHomepage();        
+        for (const selectedTask of list) {
             let d = parseISO(selectedTask.getDate());
             let now = parseISO(MainContent.fetchCurrentDate());
             if(getWeekOfMonth(d) === getWeekOfMonth(now)) {
@@ -143,7 +154,8 @@ export default class MainContent {
     static displayToday() {
         MainContent.clearListArea();
         MainContent.clearTitleArea();
-        MainContent.loadHomepage();        for (const selectedTask of list) {
+        MainContent.loadHomepage();        
+        for (const selectedTask of list) {
             let d = parseISO(selectedTask.getDate());
             let now = parseISO(MainContent.fetchCurrentDate());
             if(getDayOfYear(d) === getDayOfYear(now)) {
@@ -204,7 +216,17 @@ export default class MainContent {
 
     static deleteItem(task) {
         let index = list.indexOf(task);
-        list.splice(index, 1);
+        if (index === -1) {
+            for (const project of projectList) {
+                let pIndex = project.getTasks().indexOf(task);
+                project.getTasks().splice(pIndex, 1);
+                project.deleteTask(task.getName());
+            }
+        } else {
+            list.splice(index, 1);
+        }
+
+
         MainContent.displayAllDay();
     }
 
