@@ -8,7 +8,7 @@ let projectList = [];
 //TODO: Storage. Delete proj. 
 export default class MainContent {
 
-    static loadHomepage() {
+    static loadHomepage(text) {
         const header = document.createElement("h1");
         const addButton = document.createElement("button");
         const titleArea = document.querySelector(".titleArea");
@@ -17,13 +17,15 @@ export default class MainContent {
         const weekButton = document.querySelector("#weekButton");
         const projectButton = document.querySelector("#projectButton");
 
-        header.textContent = "pro";
+        header.textContent = text;
+
         addButton.textContent = "Add task";
         addButton.classList.add("addButton");
         
         addButton.addEventListener("click", () => {
             MainContent.handleButtonClick();
         });
+
         titleArea.appendChild(header);
         titleArea.appendChild(addButton);
 
@@ -31,6 +33,10 @@ export default class MainContent {
         inboxButton.addEventListener("click", (MainContent.displayAllDay));
         weekButton.addEventListener("click", (MainContent.displayWeek));
         projectButton.addEventListener("click", (MainContent.handleProjectClick));
+    }
+
+    static changeTitle(text) {
+        return header
     }
 
     static handleProjectClick() {
@@ -65,10 +71,10 @@ export default class MainContent {
 
     static projectPage(selectedProject) {
         const titleArea = document.querySelector(".titleArea");
-        const projectTitle = document.createElement("h2");
+        const projectTitle = document.createElement("h1");
         const newProjectTaskButton = document.createElement("button");
 
-        projectTitle.textContent = selectedProject.getName();
+        projectTitle.textContent = "Project: "+ selectedProject.getName();
         newProjectTaskButton.textContent = "new proj task";
         MainContent.updateTaskProjects(selectedProject);
         newProjectTaskButton.addEventListener("click",() => {
@@ -114,7 +120,7 @@ export default class MainContent {
     static displayAllDay() {
         MainContent.clearListArea();
         MainContent.clearTitleArea();
-        MainContent.loadHomepage();
+        MainContent.loadHomepage("Inbox");
         for (const selectedTask of list) {
             MainContent.displayToPage(selectedTask);
         }
@@ -129,7 +135,7 @@ export default class MainContent {
     static displayWeek() {
         MainContent.clearListArea();
         MainContent.clearTitleArea();
-        MainContent.loadHomepage();        
+        MainContent.loadHomepage("This week");        
         for (const selectedTask of list) {
             let d = parseISO(selectedTask.getDate());
             let now = parseISO(MainContent.fetchCurrentDate());
@@ -151,7 +157,7 @@ export default class MainContent {
     static displayToday() {
         MainContent.clearListArea();
         MainContent.clearTitleArea();
-        MainContent.loadHomepage();        
+        MainContent.loadHomepage("Today");        
         for (const selectedTask of list) {
             let d = parseISO(selectedTask.getDate());
             let now = parseISO(MainContent.fetchCurrentDate());
