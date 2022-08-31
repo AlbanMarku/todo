@@ -5,7 +5,7 @@ import { ta } from "date-fns/locale";
 
 let list = [];
 let projectList = [];
-//TODO: Project of task bracket. delete item
+//TODO: Storage. Style.
 export default class MainContent {
 
     static loadHomepage() {
@@ -124,7 +124,7 @@ export default class MainContent {
 
         for (const selectedProject of projectList) {
             for (const task of selectedProject.getTasks()) {
-                MainContent.displayToPage(task);
+                MainContent.displayToPage(task, selectedProject.getName());
             }
         }
     }
@@ -146,7 +146,7 @@ export default class MainContent {
                 let d = parseISO(task.getDate());
                 let now = parseISO(MainContent.fetchCurrentDate());
                 if(getWeekOfMonth(d) === getWeekOfMonth(now)) {
-                    MainContent.displayToPage(task);
+                    MainContent.displayToPage(task, selectedProject.getName());
                 }
             }
         }
@@ -168,13 +168,13 @@ export default class MainContent {
                 let d = parseISO(task.getDate());
                 let now = parseISO(MainContent.fetchCurrentDate());
                 if(getDayOfYear(d) === getDayOfYear(now)) {
-                    MainContent.displayToPage(task);
+                    MainContent.displayToPage(task, selectedProject.getName());
                 }
             }
         }
     }
 
-    static displayToPage(task) {
+    static displayToPage(task, projectName) {
         const listArea = document.querySelector(".listArea");
         const taskText = document.createElement("p");
         const taskItem = document.createElement("div");
@@ -182,6 +182,7 @@ export default class MainContent {
         const editArea = document.createElement("div");
         const closeButton = document.createElement("button");
         const inputDate = document.createElement("input");
+
 
         taskItem.classList.add("taskItem");
         nameArea.classList.add("nameArea");
@@ -202,6 +203,11 @@ export default class MainContent {
         inputDate.addEventListener("change", () => {
             task.setDate(inputDate.value);
         });
+        if (projectName !== "" || null || undefined) {
+            const projectNameText = document.createElement("p");
+            projectNameText.textContent = projectName;
+            nameArea.appendChild(projectNameText);
+        }
 
         nameArea.appendChild(taskText);
         editArea.appendChild(closeButton);
