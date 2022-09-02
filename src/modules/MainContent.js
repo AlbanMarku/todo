@@ -5,10 +5,10 @@ import { ta } from "date-fns/locale";
 
 let list = [];
 let projectList = [];
-//TODO: Storage. Delete proj. 
+//TODO: Storage. Delete proj.
 export default class MainContent {
 
-    static loadHomepage(text) {
+    static loadHomepage(text) { // This loads the homepage.
         const header = document.createElement("h1");
         const addButton = document.createElement("button");
         const titleArea = document.querySelector(".titleArea");
@@ -17,6 +17,7 @@ export default class MainContent {
         const weekButton = document.querySelector("#weekButton");
         const projectButton = document.querySelector("#projectButton");
 
+    
         header.textContent = text;
 
         addButton.textContent = "Add task";
@@ -33,10 +34,6 @@ export default class MainContent {
         inboxButton.addEventListener("click", (MainContent.displayAllDay));
         weekButton.addEventListener("click", (MainContent.displayWeek));
         projectButton.addEventListener("click", (MainContent.handleProjectClick));
-    }
-
-    static changeTitle(text) {
-        return header
     }
 
     static handleProjectClick() {
@@ -72,7 +69,9 @@ export default class MainContent {
     static projectPage(selectedProject) {
         const titleArea = document.querySelector(".titleArea");
         const projectTitle = document.createElement("h1");
+        const buttonArea = document.createElement("div");
         const newProjectTaskButton = document.createElement("button");
+        const deleteButton = document.createElement("button");
 
         projectTitle.textContent = "Project: "+ selectedProject.getName();
         newProjectTaskButton.textContent = "new proj task";
@@ -82,8 +81,12 @@ export default class MainContent {
             MainContent.updateTaskProjects(selectedProject);
         });
 
+        deleteButton.textContent = "Delete";
+
         titleArea.appendChild(projectTitle);
-        titleArea.appendChild(newProjectTaskButton);
+        titleArea.appendChild(buttonArea);
+        buttonArea.appendChild(newProjectTaskButton);
+        buttonArea.appendChild(deleteButton);
     }
 
     static updateTaskProjects(selectedProject) {
@@ -123,6 +126,8 @@ export default class MainContent {
         MainContent.loadHomepage("Inbox");
         for (const selectedTask of list) {
             MainContent.displayToPage(selectedTask);
+            console.log(selectedTask);
+
         }
 
         for (const selectedProject of projectList) {
@@ -186,7 +191,6 @@ export default class MainContent {
         const closeButton = document.createElement("button");
         const inputDate = document.createElement("input");
 
-
         taskItem.classList.add("taskItem");
         nameArea.classList.add("nameArea");
         editArea.classList.add("editArea");
@@ -206,8 +210,6 @@ export default class MainContent {
             task.setDate(inputDate.value);
         });
         if (projectName != undefined) {
-            console.log("hit");
-            console.log(projectName);
             const projectNameText = document.createElement("p");
             projectNameText.textContent = "Project: " + projectName;
             nameArea.appendChild(projectNameText);
@@ -240,7 +242,7 @@ export default class MainContent {
 
     static fetchCurrentDate() {
         const d = new Date();
-        const dateFormat = format(d, "yyyy-MM-d");
+        const dateFormat = format(d, "yyyy-MM-dd");
         return dateFormat
     }
 }

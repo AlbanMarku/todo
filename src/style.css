@@ -151,10 +151,14 @@ main::-webkit-scrollbar {
 
 .titleArea {
     display: flex;
-    justify-content: center;
+    justify-content: flex-start;
     flex-direction: column;
     gap: 20px;
-    padding: 5px 20px;
+    padding: 20px 20px;
+}
+
+.titleArea h1 {
+    /* how does one shove the h1 text to the top of an inline element? the inbox button, while alligned, is above the h1 */
 }
 
 .titleArea button {
@@ -163,6 +167,12 @@ main::-webkit-scrollbar {
     border-radius: 10px;
     padding: 10px;
     cursor: pointer;
+}
+
+.titleArea div {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
 /* .listArea {
