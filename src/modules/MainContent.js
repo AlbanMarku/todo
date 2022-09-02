@@ -5,7 +5,7 @@ import { ta } from "date-fns/locale";
 
 let list = [];
 let projectList = [];
-//TODO: Storage. Delete proj.
+//TODO: Storage.
 export default class MainContent {
 
     static loadHomepage(text) { // This loads the homepage.
@@ -24,7 +24,8 @@ export default class MainContent {
         addButton.classList.add("addButton");
         
         addButton.addEventListener("click", () => {
-            MainContent.handleButtonClick();
+            list.push(MainContent.createTask(MainContent.getInput("task")));//create task and push to list and get input
+            MainContent.displayAllDay();//refresh and update
         });
 
         titleArea.appendChild(header);
@@ -33,15 +34,13 @@ export default class MainContent {
         todayButton.addEventListener("click",(MainContent.displayToday));
         inboxButton.addEventListener("click", (MainContent.displayAllDay));
         weekButton.addEventListener("click", (MainContent.displayWeek));
-        projectButton.addEventListener("click", (MainContent.handleProjectClick));
+        projectButton.addEventListener("click", ()=> {
+            projectList.push(MainContent.createProject(MainContent.getInput("project")));
+            MainContent.refreshNav();
+        });
     }
 
-    static handleProjectClick() {
-        projectList.push(MainContent.createProject(MainContent.getInput("project")));
-        MainContent.refreshProNavButts();
-    }
-
-    static refreshProNavButts() {
+    static refreshNav() {
         MainContent.clearProjectButtons();
         for (const selectedProject of projectList) {
             MainContent.createProjectButton(selectedProject);
@@ -98,11 +97,6 @@ export default class MainContent {
         for (const selectedTask of selectedProject.getTasks()) {
             MainContent.displayToPage(selectedTask);
         }
-    }
-
-    static handleButtonClick() {
-        list.push(MainContent.createTask(MainContent.getInput("task")));//create task and push to list and get input
-        MainContent.displayAllDay();//refresh and update
     }
 
     static clearProjectButtons() {
@@ -249,7 +243,7 @@ export default class MainContent {
         let index = projectList.indexOf(selectedProject);
         projectList.splice(index ,1);
         MainContent.displayAllDay();
-        MainContent.refreshProNavButts();
+        MainContent.refreshNav();
     }
 
     static fetchCurrentDate() {
