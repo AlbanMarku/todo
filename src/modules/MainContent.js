@@ -38,10 +38,10 @@ export default class MainContent {
 
     static handleProjectClick() {
         projectList.push(MainContent.createProject(MainContent.getInput("project")));
-        MainContent.updateProjectList();
+        MainContent.refreshProNavButts();
     }
 
-    static updateProjectList() {
+    static refreshProNavButts() {
         MainContent.clearProjectButtons();
         for (const selectedProject of projectList) {
             MainContent.createProjectButton(selectedProject);
@@ -75,13 +75,17 @@ export default class MainContent {
 
         projectTitle.textContent = "Project: "+ selectedProject.getName();
         newProjectTaskButton.textContent = "new proj task";
+        deleteButton.textContent = "Delete";
+
         MainContent.updateTaskProjects(selectedProject);
         newProjectTaskButton.addEventListener("click",() => {
             selectedProject.addTask(MainContent.createTask(MainContent.getInput("project task")));
             MainContent.updateTaskProjects(selectedProject);
         });
 
-        deleteButton.textContent = "Delete";
+        deleteButton.addEventListener("click",()=>{
+            MainContent.deleteProject(selectedProject);
+        });
 
         titleArea.appendChild(projectTitle);
         titleArea.appendChild(buttonArea);
@@ -89,7 +93,7 @@ export default class MainContent {
         buttonArea.appendChild(deleteButton);
     }
 
-    static updateTaskProjects(selectedProject) {
+    static updateTaskProjects(selectedProject) { // Probs don't need a sperate method just for proj tasks.
         MainContent.clearListArea();
         for (const selectedTask of selectedProject.getTasks()) {
             MainContent.displayToPage(selectedTask);
@@ -227,6 +231,7 @@ export default class MainContent {
 
     static deleteItem(task) {
         let index = list.indexOf(task);
+        console.log(index);
         if (index === -1) {
             for (const project of projectList) {
                 let pIndex = project.getTasks().indexOf(task);
@@ -238,6 +243,13 @@ export default class MainContent {
         }
 
         MainContent.displayAllDay();
+    }
+
+    static deleteProject(selectedProject) {
+        let index = projectList.indexOf(selectedProject);
+        projectList.splice(index ,1);
+        MainContent.displayAllDay();
+        MainContent.refreshProNavButts();
     }
 
     static fetchCurrentDate() {
