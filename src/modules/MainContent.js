@@ -1,7 +1,7 @@
 import Task from "./Task.js"
-import {format, parseISO, getDayOfYear, getWeekOfMonth} from "date-fns"
 import Project from "./Project.js";
-import { ta } from "date-fns/locale";
+import Storage from "./Storage.js";
+import {format, parseISO, getDayOfYear, getWeekOfMonth} from "date-fns"
 
 let list = [];
 let projectList = [];
@@ -16,7 +16,6 @@ export default class MainContent {
         const inboxButton = document.querySelector("#inboxButton");
         const weekButton = document.querySelector("#weekButton");
         const projectButton = document.querySelector("#projectButton");
-
     
         header.textContent = text;
 
@@ -31,13 +30,19 @@ export default class MainContent {
         titleArea.appendChild(header);
         titleArea.appendChild(addButton);
 
+        const newHandle = function(event) { handle(event, myArgument); };
+
         todayButton.addEventListener("click",(MainContent.displayToday));
         inboxButton.addEventListener("click", (MainContent.displayAllDay));
         weekButton.addEventListener("click", (MainContent.displayWeek));
-        projectButton.addEventListener("click", ()=> {
-            projectList.push(MainContent.createProject(MainContent.getInput("project")));
-            MainContent.refreshNav();
-        });
+        projectButton.addEventListener("click",(MainContent.handleProjectButton));
+    }
+
+    static handleProjectButton() {
+        console.log("entered");
+        projectList.push(MainContent.createProject("yo"));
+        // Storage.saveProjectList(projectList);
+        MainContent.refreshNav();
     }
 
     static refreshNav() {
@@ -124,8 +129,6 @@ export default class MainContent {
         MainContent.loadHomepage("Inbox");
         for (const selectedTask of list) {
             MainContent.displayToPage(selectedTask);
-            console.log(selectedTask);
-
         }
 
         for (const selectedProject of projectList) {

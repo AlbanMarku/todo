@@ -157,10 +157,6 @@ main::-webkit-scrollbar {
     padding: 20px 20px;
 }
 
-.titleArea h1 {
-    /* how does one shove the h1 text to the top of an inline element? the inbox button, while alligned, is above the h1 */
-}
-
 .titleArea button {
     width: 100px;
     border-style: none;
@@ -174,10 +170,6 @@ main::-webkit-scrollbar {
     justify-content: space-between;
     align-items: center;
 }
-
-/* .listArea {
-    border: solid blue;
-} */
 
 footer {
     grid-area: foot;
