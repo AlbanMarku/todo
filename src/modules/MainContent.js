@@ -3,9 +3,9 @@ import Project from "./Project.js";
 import Storage from "./Storage.js";
 import {format, parseISO, getDayOfYear, getWeekOfMonth} from "date-fns"
 
-let list = [];
+let list = Storage.getTaskList();
 let projectList = [];
-//TODO: Storage.
+//TODO: update changes to stor.
 export default class MainContent {
 
     static loadHomepage(text) { // This loads the homepage.
@@ -19,18 +19,19 @@ export default class MainContent {
     
         header.textContent = text;
 
+        console.log(Storage.getTaskList());
+
         addButton.textContent = "Add task";
         addButton.classList.add("addButton");
         
         addButton.addEventListener("click", () => {
             list.push(MainContent.createTask(MainContent.getInput("task")));//create task and push to list and get input
+            Storage.saveTaskList(list);
             MainContent.displayAllDay();//refresh and update
         });
 
         titleArea.appendChild(header);
         titleArea.appendChild(addButton);
-
-        const newHandle = function(event) { handle(event, myArgument); };
 
         todayButton.addEventListener("click",(MainContent.displayToday));
         inboxButton.addEventListener("click", (MainContent.displayAllDay));
@@ -41,7 +42,7 @@ export default class MainContent {
     static handleProjectButton() {
         console.log("entered");
         projectList.push(MainContent.createProject("yo"));
-        // Storage.saveProjectList(projectList);
+        Storage.saveProjectList(projectList);
         MainContent.refreshNav();
     }
 
