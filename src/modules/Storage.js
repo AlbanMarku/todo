@@ -7,8 +7,24 @@ export default class Storage {
     }
 
     static getProjectList() {
-        const list = Object.assign(new Project(),JSON.parse(localStorage.getItem("projectList")));
+        const stringArray = JSON.parse(localStorage.getItem("projectList"));
+        let list = [];
+        for (const item of stringArray) {
+            const tt = Object.assign(new Project(), item);
+            list.push(tt);
+        }
         return list
+    }
+
+    static getProjTasks(selectedProject) {
+        const list = selectedProject.getTasks();
+        let objList = [];
+        list.forEach(element => {
+            const obj = Object.assign(new Task(), element);
+            objList.push(obj);
+        });
+        console.log(objList);
+        return objList
     }
 
     static saveTaskList(list) {
@@ -16,13 +32,12 @@ export default class Storage {
     }
 
     static getTaskList() {
-        const list = JSON.parse(localStorage.getItem("taskList"));
-        let fister = [];
-        for (const item of list) {
+        const stringArray = JSON.parse(localStorage.getItem("taskList"));
+        let list = [];
+        for (const item of stringArray) {
             const tt = Object.assign(new Task(), item);
-            fister.push(tt);
+            list.push(tt);
         }
-        // console.log(list);
-        return fister
+        return list
     }
 }

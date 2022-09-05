@@ -4,10 +4,6 @@ export default class Task {
         this.date = date;
     }
 
-    setName(name) {
-        this.name = name;
-    }
-
     getName() {
         return this.name
     }

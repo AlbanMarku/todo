@@ -2,9 +2,10 @@ import Task from "./Task.js"
 import Project from "./Project.js";
 import Storage from "./Storage.js";
 import {format, parseISO, getDayOfYear, getWeekOfMonth} from "date-fns"
+import { ta } from "date-fns/locale";
 
 let list = Storage.getTaskList();
-let projectList = [];
+let projectList = Storage.getProjectList();
 //TODO: update changes to stor.
 export default class MainContent {
 
@@ -18,8 +19,6 @@ export default class MainContent {
         const projectButton = document.querySelector("#projectButton");
     
         header.textContent = text;
-
-        console.log(Storage.getTaskList());
 
         addButton.textContent = "Add task";
         addButton.classList.add("addButton");
@@ -37,10 +36,11 @@ export default class MainContent {
         inboxButton.addEventListener("click", (MainContent.displayAllDay));
         weekButton.addEventListener("click", (MainContent.displayWeek));
         projectButton.addEventListener("click",(MainContent.handleProjectButton));
+
+        MainContent.refreshNav();
     }
 
     static handleProjectButton() {
-        console.log("entered");
         projectList.push(MainContent.createProject("yo"));
         Storage.saveProjectList(projectList);
         MainContent.refreshNav();
@@ -85,6 +85,7 @@ export default class MainContent {
         MainContent.updateTaskProjects(selectedProject);
         newProjectTaskButton.addEventListener("click",() => {
             selectedProject.addTask(MainContent.createTask(MainContent.getInput("project task")));
+            Storage.saveProjectList(projectList);
             MainContent.updateTaskProjects(selectedProject);
         });
 
@@ -100,7 +101,7 @@ export default class MainContent {
 
     static updateTaskProjects(selectedProject) { // Probs don't need a sperate method just for proj tasks.
         MainContent.clearListArea();
-        for (const selectedTask of selectedProject.getTasks()) {
+        for (const selectedTask of Storage.getProjTasks(selectedProject)) {
             MainContent.displayToPage(selectedTask);
         }
     }
@@ -133,9 +134,10 @@ export default class MainContent {
         }
 
         for (const selectedProject of projectList) {
-            for (const task of selectedProject.getTasks()) {
+            for (const task of Storage.getProjTasks(selectedProject)) {
                 MainContent.displayToPage(task, selectedProject.getName());
             }
+            
         }
     }
 
@@ -152,7 +154,7 @@ export default class MainContent {
         }
 
         for (const selectedProject of projectList) {
-            for (const task of selectedProject.getTasks()) {
+            for (const task of Storage.getProjTasks(selectedProject)) {
                 let d = parseISO(task.getDate());
                 let now = parseISO(MainContent.fetchCurrentDate());
                 if(getWeekOfMonth(d) === getWeekOfMonth(now)) {
@@ -174,7 +176,7 @@ export default class MainContent {
         }
 
         for (const selectedProject of projectList) {
-            for (const task of selectedProject.getTasks()) {
+            for (const task of Storage.getProjTasks(selectedProject)) {
                 let d = parseISO(task.getDate());
                 let now = parseISO(MainContent.fetchCurrentDate());
                 if(getDayOfYear(d) === getDayOfYear(now)) {
@@ -210,6 +212,7 @@ export default class MainContent {
         inputDate.value = task.getDate();
         inputDate.addEventListener("change", () => {
             task.setDate(inputDate.value);
+            Storage.saveTaskList(list);
         });
         if (projectName != undefined) {
             const projectNameText = document.createElement("p");
@@ -238,6 +241,7 @@ export default class MainContent {
             }
         } else {
             list.splice(index, 1);
+            Storage.saveTaskList(list);
         }
 
         MainContent.displayAllDay();
